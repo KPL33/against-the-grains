@@ -21,21 +21,17 @@ const {
   DB_HOST = "localhost",
   DB_PORT = 3306,
   DB_DIALECT = "mysql",
-  JAWSDB_URL, // Add JAWSDB_URL
+  JAWSDB_URL,
 } = process.env;
 
 // Create Sequelize instance
-const sequelize = new Sequelize(
-  process.env.NODE_ENV === "production" ? JAWSDB_URL : `${DB_NAME}`,
-  process.env.NODE_ENV === "production" ? undefined : DB_USER,
-  process.env.NODE_ENV === "production" ? undefined : DB_PASSWORD,
+const sequelize =
   process.env.NODE_ENV === "production"
-    ? {
+    ? new Sequelize(JAWSDB_URL, { dialect: DB_DIALECT })
+    : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
         host: DB_HOST,
         port: parseInt(DB_PORT, 10),
         dialect: DB_DIALECT,
-      }
-    : undefined
-);
+      });
 
 export default sequelize;
