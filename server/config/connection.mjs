@@ -8,18 +8,34 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Load environment variables from .env file
-config({ path: path.resolve(__dirname, "../../.env") });
+// Load environment variables from .env file only in development
+if (process.env.NODE_ENV !== "production") {
+  config({ path: path.resolve(__dirname, "../../.env") });
+}
 
 // Extract environment variables
-const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DIALECT } =
-  process.env;
+const {
+  DB_NAME = "default_db_name",
+  DB_USER = "default_user",
+  DB_PASSWORD = "default_password",
+  DB_HOST = "localhost",
+  DB_PORT = 3306,
+  DB_DIALECT = "mysql",
+  JAWSDB_URL, // Add JAWSDB_URL
+} = process.env;
 
 // Create Sequelize instance
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  port: DB_PORT,
-  dialect: DB_DIALECT || "mysql", // Use "mysql" as the default dialect
-});
+const sequelize = new Sequelize(
+  process.env.NODE_ENV === "production" ? JAWSDB_URL : `${DB_NAME}`,
+  process.env.NODE_ENV === "production" ? undefined : DB_USER,
+  process.env.NODE_ENV === "production" ? undefined : DB_PASSWORD,
+  process.env.NODE_ENV === "production"
+    ? {
+        host: DB_HOST,
+        port: parseInt(DB_PORT, 10),
+        dialect: DB_DIALECT,
+      }
+    : undefined
+);
 
 export default sequelize;
