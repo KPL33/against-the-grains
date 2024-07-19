@@ -27,11 +27,11 @@ const {
 // Create Sequelize instance
 const sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize(JAWSDB_URL, { dialect: DB_DIALECT })
+    ? new Sequelize(JAWSDB_URL, { dialect: "mysql" }) // Hardcode 'mysql' if needed
     : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
         host: DB_HOST,
         port: parseInt(DB_PORT, 10),
-        dialect: DB_DIALECT,
+        dialect: "mysql", // Hardcode 'mysql' for clarity
       });
 
 export default sequelize;
