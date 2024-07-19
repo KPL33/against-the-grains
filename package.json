@@ -13,7 +13,8 @@
   "start": "node server.mjs",
   "develop": "concurrently \"cd server && npm run devStart\" \"cd client && npm run dev\"",
   "build": "cd client && npm run build && cd ..",
-  "prestart": "npm run build"
+  "prestart": "npm run build",
+  "postinstall": "cd server && npm install && cd ../client && npm install"
   },
   "eslintConfig": {
     "extends": [
