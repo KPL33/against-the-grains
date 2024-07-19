@@ -20,14 +20,21 @@ const {
   DB_PASSWORD = "default_password",
   DB_HOST = "localhost",
   DB_PORT = 3306,
-  DB_DIALECT = "mysql",
   JAWSDB_URL,
 } = process.env;
 
 // Create Sequelize instance
 const sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize(JAWSDB_URL, { dialect: "mysql" }) // Hardcode 'mysql' if needed
+    ? new Sequelize(JAWSDB_URL, {
+        dialect: "mysql",
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        },
+      })
     : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
         host: DB_HOST,
         port: parseInt(DB_PORT, 10),
