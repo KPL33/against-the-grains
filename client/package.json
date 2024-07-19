@@ -1,15 +1,21 @@
 {
-  "name": "client",
+  "name": "against-the-grains-client",
   "version": "1.0.0",
-  "description": "Client-side React application using Vite",
+  "description": "Client-side for'Against the Grains' e-commerce application.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "axios": "^1.6.8",
+    "hamburger-react": "^2.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropdown-select": "^4.11.2",
+    "react-icons": "^5.1.0",
+    "react-router": "^6.22.3",
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
