@@ -8,10 +8,8 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Load environment variables from .env file only in development
-if (process.env.NODE_ENV !== "production") {
-  config({ path: path.resolve(__dirname, "../../.env") });
-}
+// Load environment variables from .env file
+config({ path: path.resolve(__dirname, "../../.env") });
 
 // Extract environment variables
 const {
@@ -25,7 +23,7 @@ const {
 
 // Create Sequelize instance
 const sequelize =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "production" && JAWSDB_URL
     ? new Sequelize(JAWSDB_URL, {
         dialect: "mysql",
         dialectOptions: {
